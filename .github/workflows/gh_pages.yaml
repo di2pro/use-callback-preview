@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Github Pages
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install and Build
@@ -21,7 +21,7 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy 🚀
+      - name: Deploy build to GH Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build
