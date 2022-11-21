@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { useCallback, useState } from "react";
+import ChildFn from "./components/ChildFn";
+import ChildCls from "./components/ChildCls";
+import ChildPureCls from "./components/ChildPureCls";
+import ChildFnMemo from "./components/ChildFnMemo";
 
 function App() {
+  const [isTurnedOn, setIsTurnedOn] = useState(false);
+  const toggleSwitch = useCallback(() => {
+    setIsTurnedOn(!isTurnedOn);
+  }, [isTurnedOn]);
+
+  const turnSwitchOff = useCallback(() => {
+    setIsTurnedOn(false);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      {isTurnedOn
+        ? <h1>Turned On</h1>
+        : <h1>Turned Off</h1>
+      }
+
+      <button onClick={toggleSwitch}>Switcher</button>
+
+      <div className="Children">
+        <ChildFn callback={turnSwitchOff} />
+        <ChildCls callback={turnSwitchOff} />
+        <ChildPureCls callback={turnSwitchOff} />
+        <ChildFnMemo callback={turnSwitchOff} />
+      </div>
     </div>
   );
 }
